@@ -19,7 +19,9 @@ request(inputUrl, (error, response, body) => {
     process.exit();
   }
 
+  //check if file exists; err = doesn't exist, !err = exists.
   fs.access(localFilePath, fs.constants.F_OK, (err) => {
+    //if file exists: 
     if (!err) {
       rl.question(`OOPS! ${localFilePath} already exists! Overwrite Y/N?\n`, (answer) => {
         if (answer === '\u0059' || answer === '\u0079') {
@@ -37,6 +39,7 @@ request(inputUrl, (error, response, body) => {
         rl.close();
       });
     }
+    //if file doesn't exist: 
     if (err) {
       fs.writeFile(localFilePath, body, err => {
         if (err) {
